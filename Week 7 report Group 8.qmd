@@ -100,7 +100,6 @@ pca_fit |>
 ```
 
 ```{r}
-{r}
 
 # Convert rotation matrix to tidy long format
 pca_long <- tidy(pca_fit, matrix = "rotation")
