@@ -12,7 +12,7 @@ print("Hello, my Children")
 ## Greta
 
 ```{r}
-print("I am about to loose my mind")
+print("I am about to lose my mind")
 
 ```
 
