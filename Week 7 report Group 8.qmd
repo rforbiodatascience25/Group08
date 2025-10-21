@@ -10,8 +10,8 @@ format: html
 | Task                | Responsible | Done? |
 |---------------------|-------------|-------|
 | Create this file    | Dana        | Yes   |
-| Load libraries      | Vakare      | No    |
-| Load data           | Dana        | No    |
+| Load libraries      | Vakare      | Yes   |
+| Load data           | Dana        | Yes   |
 | Clean data          | Greta       | No    |
 | Produce first plot  | Dana        | No    |
 | Produce middle plot | Vakare      | No    |
@@ -20,12 +20,22 @@ format: html
 # Load libraries
 
 ```{r}
-library(tidyverse)
+library("tidyverse")
+library("here")
+```
+
+# Download data the first time and save it ONLY RUN THIS ONCE IF YOU DO NOT HAVE THE DATA
+
+```{r}
+# target_url <- "https://github.com/ramhiser/datamicroarray/raw/master/data/gravier.RData"
+# output_file <- "data/_raw/gravier.RData"
+# curl::curl_download(url = target_url, destfile = output_file)
 ```
 
 # Load data
 
 ```{r}
+load(file = here("data/_raw/gravier.RData")) # loads as gravier
 ```
 
 # Clean data
