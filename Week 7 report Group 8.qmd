@@ -22,6 +22,8 @@ format: html
 ```{r}
 library("tidyverse")
 library("here")
+library("gitcreds")
+library("usethis")
 ```
 
 # Download data the first time and save it ONLY RUN THIS ONCE IF YOU DO NOT HAVE THE DATA
