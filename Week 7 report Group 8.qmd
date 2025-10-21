@@ -50,9 +50,31 @@ usethis::use_git_config(pull.rebase = "false")
 load(file = here("data/_raw/gravier.RData")) # loads as gravier
 ```
 
+# Inspect data
+
+```{r}
+gravier |> names()
+```
+
+```{r}
+gravier |> pluck("x") |> head()
+```
+
+```{r}
+gravier |> pluck("y") |> head()
+```
+
 # Clean data
 
 ```{r}
+gravier_clean <- gravier |>
+  bind_cols() |>
+  as_tibble()
+gravier_clean
+```
+
+```{r}
+
 ```
 
 # First plot
