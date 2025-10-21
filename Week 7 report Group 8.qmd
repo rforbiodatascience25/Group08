@@ -66,6 +66,8 @@ gravier |> pluck("y") |> head()
 
 # Clean data
 
+This is tidy data since each variable forms a column, each observation forms a row, and each value has a single cell.
+
 ```{r}
 gravier_clean <- gravier |>
   bind_cols() |>
@@ -74,7 +76,8 @@ gravier_clean
 ```
 
 ```{r}
-
+gravier_clean  |> 
+  write_tsv(file = "data/02_gravier_clean.tsv.gz")
 ```
 
 # First plot
