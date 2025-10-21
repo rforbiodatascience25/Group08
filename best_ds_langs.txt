@@ -8,4 +8,8 @@ Top 10 Bio Data Science Languages of ALL Time:
 4. has
 3. different
 2. tastes
+<<<<<<< HEAD
 1. NO MY CODE IS CORRECT!!!!
+=======
+1. WINNERS NEVER LOSE
+>>>>>>> 253e697e3eaf5978cbf9f716f9a2a8f1f0c31095
