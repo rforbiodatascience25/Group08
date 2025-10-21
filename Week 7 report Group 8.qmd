@@ -12,10 +12,10 @@ format: html
 | Create this file    | Dana        | Yes   |
 | Load libraries      | Vakare      | Yes   |
 | Load data           | Dana        | Yes   |
-| Clean data          | Greta       | No    |
+| Clean data          | Greta       | Yes   |
 | Produce first plot  | Dana        | No    |
 | Produce middle plot | Vakare      | No    |
-| Reproduce last plot | Greta       | No    |
+| Reproduce last plot | Greta       | Yes   |
 
 # Merging comment
 
@@ -140,9 +140,10 @@ ggplot(pca_sample, aes(x = `1`, y = `2`)) + # 1 is PC1, 2 is PC2
 
 In this plot we are looking at the variance explained by each principle component.
 
-```{pca_fit |>}
+```{r}
+pca_fit |>
   tidy(matrix = "eigenvalues")
-#a tidy tibble summarising the eigenvalues / variances for each principal component
+# a tidy tibble summarising the variances for each principal component
 ```
 
 ```{r}
