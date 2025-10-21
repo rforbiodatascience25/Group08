@@ -1,0 +1,28 @@
+---
+title: "group_08_document"
+format: html
+---
+
+## Dana
+
+```{r}
+print("Hello, my Children")
+```
+
+## Greta
+
+```{r}
+
+```
+
+## Julija
+
+```{r}
+
+```
+
+## Vakare
+
+```{r}
+
+```
