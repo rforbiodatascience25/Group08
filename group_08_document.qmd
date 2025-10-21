@@ -18,6 +18,10 @@ scarycode = c("Vakare must do all the work")
 print(scarycode)
 ```
 
+Greta's stress levels:
+
+![](images/clipboard-1368667135.jpeg)
+
 ## Greta
 
 ```{r}
