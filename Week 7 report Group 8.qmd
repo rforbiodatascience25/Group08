@@ -12,10 +12,10 @@ format: html
 | Create this file    | Dana        | Yes   |
 | Load libraries      | Vakare      | Yes   |
 | Load data           | Dana        | Yes   |
-| Clean data          | Greta       | No    |
+| Clean data          | Greta       | Yes   |
 | Produce first plot  | Dana        | No    |
 | Produce middle plot | Vakare      | No    |
-| Reproduce last plot | Greta       | No    |
+| Reproduce last plot | Greta       | Yes   |
 
 # Merging comment
 
