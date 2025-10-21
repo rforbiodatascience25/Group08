@@ -28,6 +28,7 @@ library("tidyverse")
 library("here")
 library("gitcreds")
 library("usethis")
+library("broom")
 ```
 
 # Set up git merging conflict code
@@ -82,12 +83,55 @@ gravier_clean  |>
 
 # First plot
 
+**Running PCA (we need this for all 3 plots):**
+
 ```{r}
+
+pca_fit <- gravier_clean |>
+select(where(is.numeric)) |>      # retain only numeric columns
+  prcomp(scale = TRUE)            # do PCA on scaled data
 ```
 
 # Second plot
 
 ```{r}
+pca_fit |>
+  tidy(matrix = "rotation")
+```
+
+```{r}
+
+# Convert rotation matrix to tidy long format
+pca_long <- tidy(pca_fit, matrix = "rotation")
+
+# Turning long data into wide data
+pca_wide <- pca_long |>
+  pivot_wider(names_from = PC, values_from = value)
+
+# picking 10 random genes to plot
+set.seed(5606)
+pca_sample <- pca_wide |>
+  slice_sample(n = min(10, nrow(pca_wide)))
+
+# Defining arrow style
+arrow_style <- arrow(
+  angle = 20, ends = "first", type = "closed", length = grid::unit(5, "pt")
+)
+
+# Plotting selected data
+ggplot(pca_sample, aes(x = `1`, y = `2`)) # 1 is PC1, 2 is PC2
+  geom_segment(aes(xend = 0, yend = 0), arrow = arrow_style, alpha = 0.7, color = "magenta") +
+  geom_text(
+    aes(label = column),
+    hjust = 1,
+    nudge_x = 0.007,
+    color = "purple",
+    size = 3,
+    fontface = "bold") +
+  coord_fixed() +
+  theme_minimal() +
+  labs(x = "PC1",
+       y = "PC2")
 ```
 
 # Third plot
