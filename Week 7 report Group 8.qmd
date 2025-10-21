@@ -100,7 +100,6 @@ pca_fit |>
 ```
 
 ```{r}
-{r}
 
 # Convert rotation matrix to tidy long format
 pca_long <- tidy(pca_fit, matrix = "rotation")
@@ -141,8 +140,7 @@ ggplot(pca_sample, aes(x = `1`, y = `2`)) + # 1 is PC1, 2 is PC2
 
 In this plot we are looking at the variance explained by each principle component.
 
-```{r}
-pca_fit |>
+```{pca_fit |>}
   tidy(matrix = "eigenvalues")
 #a tidy tibble summarising the eigenvalues / variances for each principal component
 ```
@@ -176,7 +174,6 @@ pca_fit |>
     panel.grid.major.x = element_blank(),   
     panel.grid.minor.x = element_blank(),
     panel.grid.major.y = element_line(color = "gray50", size = 0.2))
- 
 ```
 
 The first component captures more than 8 percent of the variation in the data. The remaining nine components, among the first ten, capture progressively smaller percentages of the variation.
