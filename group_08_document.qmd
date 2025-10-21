@@ -36,3 +36,9 @@ print("I am about to lose my mind")
 ```{r}
 print("If you're reading this you owe me cheese")
 ```
+
+**New feature**
+
+```{r}
+print("I need coffee")
+```
