@@ -9,6 +9,15 @@ format: html
 print("Hello, my Children")
 ```
 
+### New feature
+
+Texty textous text.
+
+```{r}
+scarycode = c("Vakare must do all the work")
+print(scarycode)
+```
+
 ## Greta
 
 ```{r}
