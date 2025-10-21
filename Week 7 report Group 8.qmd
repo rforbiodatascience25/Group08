@@ -17,6 +17,10 @@ format: html
 | Produce middle plot | Vakare      | No    |
 | Reproduce last plot | Greta       | No    |
 
+# Merging comment
+
+Use system("git merge main") in R console to merge your branch to main. Remember to Pull before the merge.
+
 # Load libraries
 
 ```{r}
