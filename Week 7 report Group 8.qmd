@@ -143,7 +143,7 @@ In this plot we are looking at the variance explained by each principle componen
 ```{r}
 pca_fit |>
   tidy(matrix = "eigenvalues")
-#a tidy tibble summarising the eigenvalues / variances for each principal component
+# a tidy tibble summarising the variances for each principal component
 ```
 
 ```{r}
