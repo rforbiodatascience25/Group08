@@ -16,6 +16,15 @@ print("I am about to lose my mind")
 
 ```
 
+## New feature
+
+Simple math
+
+```{r}
+x = 2+2
+x
+```
+
 ## Julija
 
 ```{r}
