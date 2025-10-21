@@ -26,6 +26,12 @@ library("gitcreds")
 library("usethis")
 ```
 
+# Set up git merging conflict code
+
+```{r}
+usethis::use_git_config(pull.rebase = "false")
+```
+
 # Download data the first time and save it ONLY RUN THIS ONCE IF YOU DO NOT HAVE THE DATA
 
 ```{r}
