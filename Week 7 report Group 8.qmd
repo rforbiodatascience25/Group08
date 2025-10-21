@@ -1,0 +1,49 @@
+---
+title: "Week 7 report Group 8"
+format: html
+---
+
+# PCA tidyverse style on gravier data
+
+# Tasks
+
+| Task                | Responsible | Done? |
+|---------------------|-------------|-------|
+| Create this file    | Dana        | Yes   |
+| Load libraries      | Vakare      | No    |
+| Load data           | Dana        | No    |
+| Clean data          | Greta       | No    |
+| Produce first plot  | Dana        | No    |
+| Produce middle plot | Vakare      | No    |
+| Reproduce last plot | Greta       | No    |
+
+# Load libraries
+
+```{r}
+
+```
+
+# Load data
+
+```{r}
+```
+
+# Clean data 
+
+```{r}
+```
+
+# First plot
+
+```{r}
+```
+
+# Second plot
+
+```{r}
+```
+
+# Third plot
+
+```{r}
+```
