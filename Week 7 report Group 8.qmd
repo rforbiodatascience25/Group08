@@ -20,7 +20,7 @@ format: html
 # Load libraries
 
 ```{r}
-
+library(tidyverse)
 ```
 
 # Load data
@@ -28,7 +28,7 @@ format: html
 ```{r}
 ```
 
-# Clean data 
+# Clean data
 
 ```{r}
 ```
