@@ -1,9 +1,12 @@
 ---
 title: "Week 7 report Group 8"
 format: html
+editor: visual
+editor_options: 
+  chunk_output_type: inline
 ---
 
-# PCA tidyverse style on gravier data
+# PCA tidyverse style on Gravier data
 
 # Tasks
 
@@ -13,8 +16,8 @@ format: html
 | Load libraries      | Vakare      | Yes   |
 | Load data           | Dana        | Yes   |
 | Clean data          | Greta       | Yes   |
-| Produce first plot  | Dana        | No    |
-| Produce middle plot | Vakare      | No    |
+| Produce first plot  | Dana        | Yes   |
+| Produce middle plot | Vakare      | Yes   |
 | Reproduce last plot | Greta       | Yes   |
 
 # Merging comment
@@ -24,11 +27,14 @@ Use system("git merge main") in R console to merge your branch to main. Remember
 # Load libraries
 
 ```{r}
+#| warning: false
+rm(list = ls())
 library("tidyverse")
 library("here")
 library("gitcreds")
 library("usethis")
 library("broom")
+library("cowplot")
 ```
 
 # Set up git merging conflict code
@@ -58,7 +64,7 @@ gravier |> names()
 ```
 
 ```{r}
-gravier |> pluck("x") |> head()
+gravier |> pluck("x") |> head(n = c(10,10))
 ```
 
 ```{r}
@@ -73,7 +79,7 @@ This is tidy data since each variable forms a column, each observation forms a r
 gravier_clean <- gravier |>
   bind_cols() |>
   as_tibble()
-gravier_clean
+gravier_clean |> head(n = c(10,10))
 ```
 
 ```{r}
@@ -86,24 +92,37 @@ gravier_clean  |>
 **Running PCA (we need this for all 3 plots):**
 
 ```{r}
-
 pca_fit <- gravier_clean |>
-select(where(is.numeric)) |>      # retain only numeric columns
-  prcomp(scale = TRUE)            # do PCA on scaled data
+select(where(is.numeric)) |>      # retain only numeric columns as prcomp() can only work on numeric data
+  prcomp(scale = TRUE)            # do PCA on scaled data (which has zero mean and unit variance for every variable i.e. every variable contributes equally to the PCA)
+```
+
+**Plotting the data in PC coordinates**
+
+```{r}
+pca_fit |>
+  augment(gravier_clean) |> # add original dataset back in
+  ggplot(aes(.fittedPC1, .fittedPC2, color = y)) + 
+  geom_point(size = 1.5) +
+    labs(title = "Exploratory PC coordinates plot", 
+         x = "Fitted PC1", y = "Fitted PC2", 
+         color = "Cancer outcome") +
+  scale_color_manual(values = c(good = "hotpink", poor = "brown"))  +
+  theme_half_open(12) + background_grid()
 ```
 
 # Second plot
 
+Investigating how 10 random genes contribute to first two principal components (i.e. is a gene increasing or decreasing PC value?).
+
 ```{r}
-pca_fit |>
+pca_long <- pca_fit |>
   tidy(matrix = "rotation")
+pca_long |>
+  head(n =10)
 ```
 
 ```{r}
-
-# Convert rotation matrix to tidy long format
-pca_long <- tidy(pca_fit, matrix = "rotation")
-
 # Turning long data into wide data
 pca_wide <- pca_long |>
   pivot_wider(names_from = PC, values_from = value)
@@ -114,67 +133,54 @@ pca_sample <- pca_wide |>
   slice_sample(n = min(10, nrow(pca_wide)))
 
 # Defining arrow style
-arrow_style <- arrow(
-  angle = 20, ends = "first", type = "closed", length = grid::unit(5, "pt")
-)
+arrow_style <- arrow(angle = 20, ends = "first", type = "closed", 
+                     length = grid::unit(5, "pt"))
+```
 
+```{r}
 # Plotting selected data
 ggplot(pca_sample, aes(x = `1`, y = `2`)) + # 1 is PC1, 2 is PC2
-  geom_segment(aes(xend = 0, yend = 0), arrow = arrow_style, alpha = 0.7, color = "magenta") +
-  geom_text(
-    aes(label = column),
-    hjust = 1,
-    nudge_x = 0.007,
-    color = "purple",
-    size = 3,
-    fontface = "bold") +
+  geom_segment(aes(xend = 0, yend = 0), 
+               arrow = arrow_style, alpha = 0.7, color = "hotpink") +
+  geom_text(aes(label = column),
+            hjust = 1,
+            nudge_x = 0.007,
+            color = "purple",
+            size = 3,
+            fontface = "bold") +
   coord_fixed() +
-  theme_minimal() +
-  labs(x = "PC1",
+  theme_half_open(12) + 
+  background_grid() +
+  labs(title = "PC coordinates rotation matrix",
+       x = "PC1",
        y = "PC2")
 ```
 
 # Third plot
 
-## Variance explained by each PC
+## Variance explained by each PC (up to PC10)
 
-In this plot we are looking at the variance explained by each principle component.
-
-```{r}
-pca_fit |>
-  tidy(matrix = "eigenvalues")
-# a tidy tibble summarising the variances for each principal component
-```
+In this plot we are looking at the variance explained by each principle component (up to PC10).
 
 ```{r}
-#get tibble of PCs and variances
+# get tibble of PCs and variances
 pca_fit |>
   tidy(matrix = "eigenvalues") |>
-# choose only the first 10 components 
+# choose only the first 10 PCs 
   filter(PC <= 10) |>
-# start ggplot
   ggplot(aes(x = PC, y = percent)) + 
-#draw bars; set color and transparency
-  geom_col(fill= "#56B4E9", alpha = 0.7) +
-#draw tick marks only for first 10 PCs
+  geom_col(fill= "pink", alpha = 0.7) +
   scale_x_continuous(breaks = 1:10) +
-#format y-axis labels as percentages and fix the spacing around your plot area
-  scale_y_continuous(
-    labels = scales::percent,
-    expand = expansion(mult = c(0, 0.05))
-  ) +
-#add labels  
+  scale_y_continuous(labels = scales::percent,
+                     expand = expansion(mult = c(0, 0.05))) +
   theme(plot.title = element_text(size = 10)) + 
-  labs(
-    title = "Variation of the First 10 Principal Components",
+  labs(title = "Variation of the First 10 Principal Components",
     x = "Principal components", 
     y = 'Percent') +
-#adjust the grid  
-  theme_minimal(base_size = 12) +
-  theme(
-    panel.grid.major.x = element_blank(),   
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.y = element_line(color = "gray50", size = 0.2))
+  theme_half_open(12) + 
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.y = element_line(color = "gray50", linewidth = 0.2))
 ```
 
-The first component captures more than 8 percent of the variation in the data. The remaining nine components, among the first ten, capture progressively smaller percentages of the variation.
+The first component captures more than 8 percent of the variation in the data. The remaining nine components, among the first ten, capture progressively smaller percentages of the variation. Although PC1 capturing 8% is a low number, this is typical for large gene expression datasets and thus as expected.
